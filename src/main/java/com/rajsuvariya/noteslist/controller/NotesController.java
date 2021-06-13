@@ -19,36 +19,45 @@ public class NotesController {
     private NotesService notesService;
 
     @PostMapping("getNote/{id}")
-    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public Note getNote(@PathVariable long id) {
         return notesService.getNote(id);
     }
 
-    @RequestMapping(value = "addNote", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping("addNote")
     @ResponseStatus(HttpStatus.CREATED)
-    public Note addNote(AddUpdateNoteRequestModel note) {
+    public Note addNote(@RequestBody AddUpdateNoteRequestModel note) {
         log.debug("addNote " + note);
         return notesService.addNote(note.getNote());
     }
 
     @DeleteMapping("deleteNote/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteNote(@PathVariable long id) {
         notesService.deleteNote(id);
     }
 
     @PutMapping("updateNote/{id}")
-    public Note updateNote(@PathVariable long id, AddUpdateNoteRequestModel note) {
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Note updateNote(@PathVariable long id, @RequestBody AddUpdateNoteRequestModel note) {
         return notesService.updateNote(id, note.getNote());
     }
 
     @PutMapping("completeNote/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Note completeNote(@PathVariable long id) {
         return notesService.completeNote(id);
     }
 
     @PostMapping("allNotes")
-    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public List<Note> getAllNotes() {
         return notesService.getAllNotes();
+    }
+
+    @PostMapping("allDeletedNotes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Note> getAllDeletedNotes() {
+        return notesService.getAllDeletedNotes();
     }
 }

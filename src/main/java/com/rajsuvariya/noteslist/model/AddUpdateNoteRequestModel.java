@@ -3,6 +3,9 @@ package com.rajsuvariya.noteslist.model;
 public class AddUpdateNoteRequestModel {
     String note;
 
+    public AddUpdateNoteRequestModel() {
+    }
+
     public AddUpdateNoteRequestModel(String note) {
         this.note = note;
     }

@@ -1,5 +1,7 @@
 package com.rajsuvariya.noteslist.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,11 +11,13 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty
     private long id;
     private String note;
     private Date createOn;
     private Date updatedOn;
     private String status;
+    private Boolean isDeleted;
 
     public Note() {
     }
@@ -23,6 +27,7 @@ public class Note {
         this.createOn = createOn;
         this.updatedOn = createOn;
         this.status = "active";
+        this.isDeleted = false;
     }
 
     public String getNote() {
@@ -39,6 +44,15 @@ public class Note {
 
     public Date getUpdatedOn() {
         return updatedOn;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void updateIsDeleted(Boolean deleted) {
+        this.isDeleted = deleted;
+        this.updatedOn = new Date();
     }
 
     public void updateNote(String note) {
